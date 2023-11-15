@@ -2,27 +2,25 @@ package Algorithms;
 
 public class binarySearch {
     public static void binarySearchSort(int[] arr, int target) {
-        //initialise start and end
-        int start = 0, end = arr.length - 1;
+        binarySearchSort(arr, target, 0, arr.length - 1);
+    }
 
-        while (start <= end) {
-            //initialise mid variable
-            int mid = start + (end- start) / 2;
+    private static int binarySearchSort(int[] arr, int target, int start, int end) {
+        if (start <= end) {
+            //set up a mid-value on sorted list
+            int mid = start + (end - start) / 2;
 
-            // Check if target is present at mid
             if (arr[mid] == target) {
-                return;
-            }
-
-            // If target is greater, ignore the left half
-            if (arr[mid] < target) {
-                start = mid + 1;
-            }
-            // If target is smaller, ignore the right half
-            else {
-                end = mid - 1;
+                return mid;
+            } else if (arr[mid] < target) {
+                //search the right side
+                return binarySearchSort(arr, target, mid + 1, end);
+            } else {
+                //search the left side
+                return binarySearchSort(arr, target, start, mid - 1);
             }
         }
-
+        //when element not found
+        return -1;
     }
 }
