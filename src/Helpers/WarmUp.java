@@ -1,15 +1,22 @@
 package Helpers;
 
 import Algorithms.*;
-
+import java.util.Arrays;
 import java.util.List;
-import java.util.Random;
 
 public class WarmUp {
 
     public static void warmUp(List<Integer> numbers, String algorithm, int warmupIterations) {
+
+        int[] arrayForBinarySearch;
+
         for (int warmup = 0; warmup < warmupIterations; warmup++) {
+
             int[] array = numbers.stream().mapToInt(Integer::intValue).toArray();
+
+            // Create copy for Binary Search algorithm
+            arrayForBinarySearch = Arrays.copyOf(array, array.length);
+            Arrays.sort(arrayForBinarySearch);
 
             // Call the appropriate sorting method based on the algorithm
             switch (algorithm) {
@@ -35,17 +42,16 @@ public class WarmUp {
                     medianIterative.quickSortMedianIterative(array, 0, array.length - 1);
                     break;
                 case "QS Median Recursive":
-                    medianRecursive.quickSortMedianRecursive(array, 0, array.length -1);
+                    medianRecursive.quickSortMedianRecursive(array, 0, array.length - 1);
                     break;
                 case "Binary Search":
-                    //choosing and setting random number to choose
-                    int targetIndex = new Random().nextInt(array.length);
-                    int target = array[targetIndex];
-                    //System.out.println("Searching for target: " + target);
-                    binarySearch.binarySearchSort(array, target);
+                    // Choosing and setting a fixed middle number
+                    int targetIndex = arrayForBinarySearch.length / 2;
+                    int target = arrayForBinarySearch[targetIndex];
+                    // Binary search
+                    binarySearch.binarySearchSort(arrayForBinarySearch, target);
                     break;
-                // Add cases for other algorithms
+            }
             }
         }
     }
-}

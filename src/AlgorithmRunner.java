@@ -3,7 +3,6 @@ import Helpers.ResultFormatter;
 import Helpers.WarmUp;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Random;
 
 public class AlgorithmRunner {
     public static void runAlgorithm(String algorithm, List<Integer> numbers, int numberOfRuns, int size, int numberOfElementsToShow) {
@@ -16,10 +15,15 @@ public class AlgorithmRunner {
         long totalElapsedTime = 0;
 
         int[] array = new int[0];
+        int[] arrayForBinarySearch = new int[0];
+
         for (int run = 0; run < numberOfRuns; run++) {
 
             // Create a list to store the numbers
             array = numbers.stream().mapToInt(Integer::intValue).toArray();
+            // Create copy for Binary Search algorithm
+            arrayForBinarySearch = Arrays.copyOf(array, array.length);
+            Arrays.sort(arrayForBinarySearch);
 
             // start countdown
             long startTime = System.nanoTime();
@@ -51,16 +55,12 @@ public class AlgorithmRunner {
                     medianRecursive.quickSortMedianRecursive(array, 0, array.length - 1);
                     break;
                 case "Binary Search":
-                    //sorting numbers
-                    Arrays.sort(array);
-                    //choosing and setting random number to choose
-                    int targetIndex = new Random().nextInt(array.length);
-                    int target = array[targetIndex];
-
-                    //System.out.println("Searching for target: " + target);
-                    binarySearch.binarySearchSort(array, target);
+                    // Choosing and setting a fixed middle number
+                    int targetIndex = arrayForBinarySearch.length / 2;
+                    int target = arrayForBinarySearch[targetIndex];
+                    // Binary search
+                    binarySearch.binarySearchSort(arrayForBinarySearch, target);
                     break;
-                // Add cases for other algorithms
             }
 
             // Measure the end time
@@ -75,7 +75,11 @@ public class AlgorithmRunner {
         double averageElapsedTime = (double) totalElapsedTime / numberOfRuns;
 
         // print results in formatted way
-        ResultFormatter.printResults(algorithm, size, averageElapsedTime, array, numberOfElementsToShow);
+        if ("Binary Search".equals(algorithm)) {
+            ResultFormatter.printResults(algorithm, size, averageElapsedTime, arrayForBinarySearch, numberOfElementsToShow);
+        } else {
+            ResultFormatter.printResults(algorithm, size, averageElapsedTime, array, numberOfElementsToShow);
         }
     }
+}
 
