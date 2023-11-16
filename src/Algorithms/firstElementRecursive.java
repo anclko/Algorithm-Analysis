@@ -1,39 +1,48 @@
 package Algorithms;
 
 public class firstElementRecursive {
-    static int partition(int[] arr, int low, int high) {
-        int pivot = arr[low];
+    public static void quickSortRecursive(int[] arr, int start, int stop) {
+        if (start < stop) {
+            // pi is the partitioning index, arr[pi] is now at the right place
+            int partitionIndex = partition(arr, start, stop);
+
+            // Recursively sort elements before and after the partition
+            quickSortRecursive(arr, start, partitionIndex);
+            quickSortRecursive(arr, partitionIndex + 1, stop);
+        }
+    }
+
+    public static int partition(int[] arr, int low, int high) {
+        //first element chosen as pivot but for easier code implementation
+        //moved the first element to the end
+        swap(arr, low, high);
+        int pivot = arr[high];
+
         int i = low - 1;
-        int j = high + 1;
+        int j = high;
 
         while (true) {
-            // Find the leftmost element greater than or equal to the pivot
             do {
                 i++;
             } while (arr[i] < pivot);
 
-            // Find the rightmost element smaller than or equal to the pivot
             do {
                 j--;
             } while (arr[j] > pivot);
 
-            // If the two pointers met
-            if (i >= j)
-                return j;
+            if (i >= j) {
+                // Move the pivot to its final position
+                swap(arr, i, high);
+                return i;
+            }
 
-            // Swap the elements at positions i and j
-            int temp = arr[i];
-            arr[i] = arr[j];
-            arr[j] = temp;
+            swap(arr, i, j);
         }
     }
 
-    public static void quickSortRecursive(int[] arr, int low, int high) {
-        if (low < high) {
-            int partitionIndex = partition(arr, low, high);
-
-            quickSortRecursive(arr, low, partitionIndex - 1);
-            quickSortRecursive(arr, partitionIndex + 1, high);
-        }
+    public static void swap(int[] arr, int i, int j) {
+        int temp = arr[i];
+        arr[i] = arr[j];
+        arr[j] = temp;
     }
 }
