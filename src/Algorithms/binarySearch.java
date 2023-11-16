@@ -1,7 +1,7 @@
 package Algorithms;
 
 /**
- * This class implements the Binary Search algorithm to find a target value in a sorted array.
+ * Implementation of the binary search algorithm to find a target value in a sorted array.
  */
 public class binarySearch {
 

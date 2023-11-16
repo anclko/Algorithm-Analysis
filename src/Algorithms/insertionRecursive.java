@@ -1,26 +1,33 @@
 package Algorithms;
-
+/**
+ * Implementation of insertion sort algorithm using recursive method.
+ */
 public class insertionRecursive {
+    /**
+     * Sorts an array using insertion sort recursively.
+     *
+     * @param arr  The array to be sorted.
+     * @param size The size of the array.
+     */
     public static void insertionSortRecursive(int[] arr, int size) {
-        // Base case
+        // base case -> if the size is 0 or less, the array is sorted
         if (size <= 0)
             return;
 
-        // Sort first n-1 elements
+        //recursive call to sort the array with one less element
         insertionSortRecursive(arr, size - 1);
 
-        // Insert last element at its correct position
-        // in sorted array.
-        int last = arr[size - 1];
+        //insertion of last element into the sorted portion of the array
+        int key = arr[size - 1];
         int j = size - 2;
 
-        /* Move elements of arr[0..i-1], that are
-          greater than key, to one position ahead
-          of their current position */
-        while (j >= 0 && arr[j] > last) {
+        //shift elements greater than key to the right to make space for insertion
+        while (j >= 0 && arr[j] > key) {
             arr[j + 1] = arr[j];
             j--;
         }
-        arr[j + 1] = last;
+
+        //insert the key to correct position in the array
+        arr[j + 1] = key;
     }
 }
