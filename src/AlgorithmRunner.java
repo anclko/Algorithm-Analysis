@@ -39,7 +39,7 @@ public class AlgorithmRunner {
                 case "QS Random Pivot Iterative":
                     randomIterative.quickSortRandomIterative(array, 0, array.length - 1);
                     break;
-                case "QS Random Pivot Recursion":
+                case "QS Random Pivot Recursive":
                     randomRecursive.quickSortRandomRecursive(array, 0, array.length - 1);
                     break;
                 case "QS Array[0] Pivot Iterative":
@@ -48,10 +48,10 @@ public class AlgorithmRunner {
                 case "QS Array[0] Pivot Recursive":
                     firstElementRecursive.quickSortRecursive(array, 0, array.length - 1);
                     break;
-                case "QS Median Iterative":
+                case "QS Median Pivot Iterative":
                     medianIterative.quickSortMedianIterative(array, 0, array.length - 1);
                     break;
-                case "QS Median Recursive":
+                case "QS Median Pivot Recursive":
                     medianRecursive.quickSortMedianRecursive(array, 0, array.length - 1);
                     break;
                 case "Binary Search":
