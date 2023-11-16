@@ -21,8 +21,8 @@ public class Main {
         String[] algorithms = {
                 "Insertion Iterative",
                 "Insertion Recursive",
-                "QS Median Pivot Iterative",
                 "QS Median Pivot Recursive",
+                "QS Median Pivot Iterative",
                 "QS Random Pivot Iterative",
                 "QS Random Pivot Recursive",
                 "QS Array[0] Pivot Iterative",

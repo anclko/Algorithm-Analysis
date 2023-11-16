@@ -2,79 +2,77 @@ package Algorithms;
 
 public class medianIterative {
 
-    public static void quickSortMedianIterative(int[] arr, int l, int h) {
+    public static void quickSortMedianIterative(int[] arr, int low, int high) {
         // Create an auxiliary stack
-        int[] stack = new int[h - l + 1];
+        int[] stack = new int[high - low + 1];
 
         // initialize top of stack
         int top = -1;
 
-        // push initial values of l and h to stack
-        stack[++top] = l;
-        stack[++top] = h;
+        // push initial values of low and high to stack
+        stack[++top] = low;
+        stack[++top] = high;
 
         // Keep popping from stack while it is not empty
         while (top >= 0) {
-            // Pop h and l
-            h = stack[top--];
-            l = stack[top--];
+            // Pop high and low
+            high = stack[top--];
+            low = stack[top--];
 
             // Set pivot element at its correct position in the sorted array
-            int p = partition(arr, l, h);
+            int p = partition(arr, low, high);
 
             // If there are elements on the left side of the pivot, push left side to stack
-            if (p - 1 > l) {
-                stack[++top] = l;
+            if (p - 1 > low) {
+                stack[++top] = low;
                 stack[++top] = p - 1;
             }
 
             // If there are elements on the right side of the pivot, push right side to stack
-            if (p + 1 < h) {
+            if (p + 1 < high) {
                 stack[++top] = p + 1;
-                stack[++top] = h;
+                stack[++top] = high;
             }
         }
     }
+
+    static int partition(int[] arr, int low, int high) {
+        // Choose the pivot using the median of three
+        int pivotIndex = medianOfThree(arr, low, high);
+        int pivot = arr[pivotIndex];
+
+        // Swap the pivot with the last element
+        swap(arr, pivotIndex, high);
+
+        int i = low;
+
+        for (int j = low; j < high; j++) {
+            if (arr[j] <= pivot) {
+                swap(arr, i, j);
+                i++;
+            }
+        }
+
+        // Swap the pivot to its final position
+        swap(arr, i, high);
+
+        return i;
+    }
+
     static int medianOfThree(int[] arr, int low, int high) {
         int mid = low + (high - low) / 2;
 
         if (arr[low] > arr[mid]) {
             swap(arr, low, mid);
         }
-
         if (arr[low] > arr[high]) {
             swap(arr, low, high);
         }
-
         if (arr[mid] > arr[high]) {
             swap(arr, mid, high);
         }
 
         return mid;
-    }
-
-    static int partition(int[] arr, int low, int high) {
-        int pivotIndex = medianOfThree(arr, low, high);
-        int pivot = arr[pivotIndex];
-
-        // Swap the pivot to the end
-        swap(arr, pivotIndex, high);
-
-        int i = low - 1;
-
-        for (int j = low; j < high; j++) {
-            if (arr[j] <= pivot) {
-                i++;
-                // Swap arr[i] and arr[j] using the swap function
-                swap(arr, i, j);
-            }
-        }
-
-        // Swap arr[i+1] and arr[high] using the swap function
-        swap(arr, i + 1, high);
-
-        // Return the index of the pivot element
-        return i + 1;
     }
 
     static void swap(int[] arr, int i, int j) {
