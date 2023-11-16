@@ -4,37 +4,38 @@ import java.util.Random;
 
 public class randomIterative {
 
+    static int randomPivot(int low, int high) {
+        Random rand = new Random();
+        return rand.nextInt(high - low + 1) + low;
+    }
     static int partition(int[] arr, int low, int high) {
-        // Choose a random pivot index within the range of the current array
-        int pivotIndex = new Random().nextInt(high - low + 1) + low;
-        int pivot = arr[pivotIndex];
+        int randomIndex = randomPivot(low, high);
 
-        // Swap the pivot element with the last element
-        int temp = arr[high];
-        arr[high] = arr[pivotIndex];
-        arr[pivotIndex] = temp;
-
-        // index of smaller element
-        int i = low - 1;
-
-        for (int j = low; j <= high - 1; j++) {
-            // If the current element is smaller than or equal to the pivot
-            if (arr[j] <= pivot) {
-                i++;
-
-                // Swap arr[i] and arr[j]
-                temp = arr[i];
-                arr[i] = arr[j];
-                arr[j] = temp;
-            }
-        }
-
-        // Swap arr[i+1] and arr[high] (or pivot)
-        temp = arr[i + 1];
-        arr[i + 1] = arr[high];
+        // Swap the random pivot with the last element to simplify the loop logic
+        int temp = arr[randomIndex];
+        arr[randomIndex] = arr[high];
         arr[high] = temp;
 
-        return i + 1;
+        int pivot = arr[high];
+        int i = low - 1;
+        int j = high + 1;
+
+        while (true) {
+            do {
+                i++;
+            } while (arr[i] < pivot);
+
+            do {
+                j--;
+            } while (arr[j] > pivot);
+
+            if (i >= j)
+                return j;
+
+            temp = arr[i];
+            arr[i] = arr[j];
+            arr[j] = temp;
+        }
     }
 
     // Iterative quicksort function with random pivot

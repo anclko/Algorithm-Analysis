@@ -2,39 +2,6 @@ package Algorithms;
 
 public class firstElementIterative {
         // Function to partition the array and return the partition index
-        static int partition(int[] arr, int low, int high) {
-            // Choose the first element as the pivot
-            int pivot = arr[low];
-
-            // Swap the first element with the last element
-            int temp = arr[high];
-            arr[high] = arr[low];
-            arr[low] = temp;
-
-            // index of smaller element
-            int i = low - 1;
-
-            for (int j = low; j <= high - 1; j++) {
-                // If the current element is smaller than or equal to the pivot
-                if (arr[j] <= pivot) {
-                    i++;
-
-                    // Swap arr[i] and arr[j]
-                    temp = arr[i];
-                    arr[i] = arr[j];
-                    arr[j] = temp;
-                }
-            }
-
-            // Swap arr[i+1] and arr[high] (or pivot)
-            temp = arr[i + 1];
-            arr[i + 1] = arr[high];
-            arr[high] = temp;
-
-            return i + 1;
-        }
-
-        // Iterative quicksort function
         public static void quickSortIterative(int[] arr, int l, int h) {
             // Create an auxiliary stack
             int[] stack = new int[h - l + 1];
@@ -66,6 +33,32 @@ public class firstElementIterative {
                     stack[++top] = p + 1;
                     stack[++top] = h;
                 }
+            }
+        }
+        static int partition(int[] arr, int low, int high) {
+            int pivot = arr[low];
+            int i = low - 1;
+            int j = high + 1;
+
+            while (true) {
+                // Find the leftmost element greater than or equal to the pivot
+                do {
+                    i++;
+                } while (arr[i] < pivot);
+
+                // Find the rightmost element smaller than or equal to the pivot
+                do {
+                    j--;
+                } while (arr[j] > pivot);
+
+                // If the two pointers met
+                if (i >= j)
+                    return j;
+
+                // Swap the elements at positions i and j
+                int temp = arr[i];
+                arr[i] = arr[j];
+                arr[j] = temp;
             }
         }
     }

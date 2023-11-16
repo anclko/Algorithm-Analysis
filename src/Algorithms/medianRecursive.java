@@ -26,35 +26,33 @@ public class medianRecursive {
     }
 
     static int partition(int[] arr, int low, int high) {
-        // Choose the median of three elements as the pivot
+        // Choose the pivot using the median of three
         int pivotIndex = medianOfThree(arr, low, high);
         int pivot = arr[pivotIndex];
 
-        // Swap the pivot element with the last element
-        int temp = arr[high];
-        arr[high] = arr[pivotIndex];
-        arr[pivotIndex] = temp;
-
         int i = low - 1;
+        int j = high + 1;
 
-        for (int j = low; j <= high - 1; j++) {
-            // If the current element is smaller than or equal to the pivot
-            if (arr[j] <= pivot) {
+        while (true) {
+            // Find the leftmost element greater than or equal to the pivot
+            do {
                 i++;
+            } while (arr[i] < pivot);
 
-                // swap arr[i] and arr[j]
-                temp = arr[i];
-                arr[i] = arr[j];
-                arr[j] = temp;
-            }
+            // Find the rightmost element smaller than or equal to the pivot
+            do {
+                j--;
+            } while (arr[j] > pivot);
+
+            // If the two pointers met
+            if (i >= j)
+                return j;
+
+            // Swap the elements at positions i and j
+            int temp = arr[i];
+            arr[i] = arr[j];
+            arr[j] = temp;
         }
-
-        // swap arr[i+1] and arr[high] (or pivot)
-        temp = arr[i + 1];
-        arr[i + 1] = arr[high];
-        arr[high] = temp;
-
-        return i + 1;
     }
 
     public static void quickSortMedianRecursive(int[] arr, int low, int high) {

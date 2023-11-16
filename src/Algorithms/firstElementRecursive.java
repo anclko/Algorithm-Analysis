@@ -2,47 +2,38 @@ package Algorithms;
 
 public class firstElementRecursive {
     static int partition(int[] arr, int low, int high) {
-        // Choose the first element as the pivot
         int pivot = arr[low];
+        int i = low - 1;
+        int j = high + 1;
 
-        // Swap the first element with the last element
-        int temp = arr[high];
-        arr[high] = arr[low];
-        arr[low] = temp;
-
-        int i = (low - 1); // index of smaller element
-        for (int j = low; j <= high - 1; j++) {
-            // If the current element is smaller than or equal to the pivot
-            if (arr[j] <= pivot) {
+        while (true) {
+            // Find the leftmost element greater than or equal to the pivot
+            do {
                 i++;
+            } while (arr[i] < pivot);
 
-                // swap arr[i] and arr[j]
-                temp = arr[i];
-                arr[i] = arr[j];
-                arr[j] = temp;
-            }
+            // Find the rightmost element smaller than or equal to the pivot
+            do {
+                j--;
+            } while (arr[j] > pivot);
+
+            // If the two pointers met
+            if (i >= j)
+                return j;
+
+            // Swap the elements at positions i and j
+            int temp = arr[i];
+            arr[i] = arr[j];
+            arr[j] = temp;
         }
-
-        // swap arr[i+1] and arr[high] (or pivot)
-        temp = arr[i + 1];
-        arr[i + 1] = arr[high];
-        arr[high] = temp;
-
-        return i + 1;
     }
 
-    /* The main function that implements QuickSort()
-    arr[] --> Array to be sorted,
-    low --> Starting index,
-    high --> Ending index */
     public static void quickSortRecursive(int[] arr, int low, int high) {
         if (low < high) {
-            // pi is the partitioning index, arr[pi] is now at the right place
-            int pi = partition(arr, low, high);
+            int partitionIndex = partition(arr, low, high);
 
-            // Recursively sort elements before and after the partition
-            quickSortRecursive(arr, low, pi - 1);
-            quickSortRecursive(arr, pi + 1, high);
+            quickSortRecursive(arr, low, partitionIndex - 1);
+            quickSortRecursive(arr, partitionIndex + 1, high);
         }
     }
 }
