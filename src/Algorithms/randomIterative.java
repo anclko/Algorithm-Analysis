@@ -4,41 +4,6 @@ import java.util.Random;
 
 public class randomIterative {
 
-    static int randomPivot(int low, int high) {
-        Random rand = new Random();
-        return rand.nextInt(high - low + 1) + low;
-    }
-    static int partition(int[] arr, int low, int high) {
-        int randomIndex = randomPivot(low, high);
-
-        // Swap the random pivot with the last element to simplify the loop logic
-        int temp = arr[randomIndex];
-        arr[randomIndex] = arr[high];
-        arr[high] = temp;
-
-        int pivot = arr[high];
-        int i = low - 1;
-        int j = high + 1;
-
-        while (true) {
-            do {
-                i++;
-            } while (arr[i] < pivot);
-
-            do {
-                j--;
-            } while (arr[j] > pivot);
-
-            if (i >= j)
-                return j;
-
-            temp = arr[i];
-            arr[i] = arr[j];
-            arr[j] = temp;
-        }
-    }
-
-    // Iterative quicksort function with random pivot
     public static void quickSortRandomIterative(int[] arr, int l, int h) {
         // Create an auxiliary stack
         int[] stack = new int[h - l + 1];
@@ -71,5 +36,36 @@ public class randomIterative {
                 stack[++top] = h;
             }
         }
+    }
+
+    static int partition(int[] arr, int low, int high) {
+        // Choose a random pivot index
+        int pivotIndex = low + new Random().nextInt(high - low + 1);
+        int pivot = arr[pivotIndex];
+
+        // Swap the pivot with the element at the high index
+        swap(arr, pivotIndex, high);
+
+        int i = low;
+
+        // Iterate through the array and rearrange elements based on the pivot
+        for (int j = low; j < high; j++) {
+            if (arr[j] <= pivot) {
+                swap(arr, i, j);
+                i++;
+            }
+        }
+
+        // Move the pivot to its final position
+        swap(arr, i, high);
+
+        // Return the index of the pivot element
+        return i;
+    }
+
+    public static void swap(int[] arr, int i, int j) {
+        int temp = arr[i];
+        arr[i] = arr[j];
+        arr[j] = temp;
     }
 }
