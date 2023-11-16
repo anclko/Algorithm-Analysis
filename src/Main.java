@@ -29,21 +29,22 @@ public class Main {
                 "QS Array[0] Pivot Recursive",
                 "Binary Search"};
 
-        // Number of times it will run the method
+        // 10 cycles to get an average
         int numberOfRuns = 10;
 
         // Running through the units to test
         for (int numberOfElements : elementsToTest) {
 
-            // Print results using ResultFormatter class
+            // Print the header for the information
             ResultFormatter.printTableHeader();
 
-            // Read number.txt
+            // Read file and add to list
             List<Integer> numbers = ReadFile.readNumbersFromFile(filePath, numberOfElements);
 
+            //Loop algorithms to run them with list from readfile
             for (String algorithm : algorithms) {
-
-                // Printing time results
+                // Printing time results and showing first 20 elements of array
+                // Showing array in order to show the sorting works
                 AlgorithmRunner.runAlgorithm(algorithm, numbers, numberOfRuns, numberOfElements, 20);
             }
         }
