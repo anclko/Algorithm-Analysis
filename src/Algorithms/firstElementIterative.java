@@ -36,32 +36,26 @@ public class firstElementIterative {
         }
     }
 
-    public static int partition(int[] arr, int low, int high) {
-        //first element chosen as pivot but for easier code implementation
-        //moved the first element to the end
+    static int partition(int[] arr, int low, int high) {
+        // Choose the first element as the pivot
+        int pivot = arr[low];
+
+        // Swap the pivot with the last element
         swap(arr, low, high);
-        int pivot = arr[high];
 
-        int i = low - 1;
-        int j = high;
+        int i = low;
 
-        while (true) {
-            do {
+        for (int j = low; j < high; j++) {
+            if (arr[j] <= pivot) {
+                swap(arr, i, j);
                 i++;
-            } while (arr[i] < pivot);
-
-            do {
-                j--;
-            } while (arr[j] > pivot);
-
-            if (i >= j) {
-                // Move the pivot to its final position
-                swap(arr, i, high);
-                return i;
             }
-
-            swap(arr, i, j);
         }
+
+        // Swap the pivot to its final position
+        swap(arr, i, high);
+
+        return i;
     }
 
     public static void swap(int[] arr, int i, int j) {

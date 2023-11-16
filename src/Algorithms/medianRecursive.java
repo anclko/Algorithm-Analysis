@@ -18,7 +18,6 @@ public class medianRecursive {
     }
 
     static int partition(int[] arr, int low, int high) {
-        // Choose the pivot using the median of three
         int pivotIndex = medianOfThree(arr, low, high);
         int pivot = arr[pivotIndex];
 

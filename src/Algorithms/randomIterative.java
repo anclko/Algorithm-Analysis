@@ -39,16 +39,15 @@ public class randomIterative {
     }
 
     static int partition(int[] arr, int low, int high) {
-        // Choose a random pivot index
-        int pivotIndex = low + new Random().nextInt(high - low + 1);
+        Random rand = new Random();
+        int pivotIndex = low + rand.nextInt((high - low )+ 1);
         int pivot = arr[pivotIndex];
 
-        // Swap the pivot with the element at the high index
+        // Swap the pivot with the last element
         swap(arr, pivotIndex, high);
 
         int i = low;
 
-        // Iterate through the array and rearrange elements based on the pivot
         for (int j = low; j < high; j++) {
             if (arr[j] <= pivot) {
                 swap(arr, i, j);
@@ -56,10 +55,9 @@ public class randomIterative {
             }
         }
 
-        // Move the pivot to its final position
+        // Swap the pivot to its final position
         swap(arr, i, high);
 
-        // Return the index of the pivot element
         return i;
     }
 

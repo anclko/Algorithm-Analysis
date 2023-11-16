@@ -14,30 +14,27 @@ public class randomRecursive {
         }
     }
 
-    public static int partition(int[] arr, int low, int high) {
-        // Choose a random pivot index
-        int pivotIndex = low + new Random().nextInt(high - low + 1);
+    static int partition(int[] arr, int low, int high) {
+        Random rand = new Random();
+        int pivotIndex = low + rand.nextInt((high - low )+ 1);
         int pivot = arr[pivotIndex];
 
-        // Move pivot to the end
+        // Swap the pivot with the last element
         swap(arr, pivotIndex, high);
 
-        // Initialize indices for the elements smaller and greater than the pivot
-        int i = low - 1;
+        int i = low;
 
-        // Iterate through the array and rearrange elements based on the pivot
         for (int j = low; j < high; j++) {
             if (arr[j] <= pivot) {
-                i++;
                 swap(arr, i, j);
+                i++;
             }
         }
 
-        // Move the pivot to its final position
-        swap(arr, i + 1, high);
+        // Swap the pivot to its final position
+        swap(arr, i, high);
 
-        // Return the index of the pivot element
-        return i + 1;
+        return i;
     }
 
     public static void swap(int[] arr, int i, int j) {

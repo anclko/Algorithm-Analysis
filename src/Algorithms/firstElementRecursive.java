@@ -12,32 +12,24 @@ public class firstElementRecursive {
         }
     }
 
-    public static int partition(int[] arr, int low, int high) {
-        //first element chosen as pivot but for easier code implementation
-        //moved the first element to the end
-        swap(arr, low, high);
-        int pivot = arr[high];
+    static int partition(int[] arr, int low, int high) {
+        // Choose the first element as the pivot
+        int pivot = arr[low];
 
-        int i = low - 1;
-        int j = high;
-
-        while (true) {
-            do {
+        // Move pivot to the correct position
+        int i = low;
+        for (int j = low + 1; j <= high; j++) {
+            if (arr[j] < pivot) {
                 i++;
-            } while (arr[i] < pivot);
-
-            do {
-                j--;
-            } while (arr[j] > pivot);
-
-            if (i >= j) {
-                // Move the pivot to its final position
-                swap(arr, i, high);
-                return i;
+                swap(arr, i, j);
             }
-
-            swap(arr, i, j);
         }
+
+        // Swap the pivot to its final position
+        swap(arr, i, low);
+
+        // Return the index of the pivot
+        return i;
     }
 
     public static void swap(int[] arr, int i, int j) {
