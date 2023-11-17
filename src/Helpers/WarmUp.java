@@ -52,6 +52,6 @@ public class WarmUp {
                     binarySearch.binarySearchSort(arrayForBinarySearch, target);
                     break;
             }
-            }
         }
     }
+}

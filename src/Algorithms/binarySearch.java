@@ -33,7 +33,7 @@ public class binarySearch {
             // checks if the value of middle index is equal to the target.
             if (arr[mid] == target) {
                 return mid;
-              //if target is greater than value at mid -> search right side
+                //if target is greater than value at mid -> search right side
             } else if (arr[mid] < target) {
                 return binarySearchSort(arr, target, mid + 1, right);
             } else {
