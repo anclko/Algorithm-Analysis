@@ -2,36 +2,36 @@ package Algorithms;
 
 public class firstElementIterative {
     // Function to partition the array and return the partition index
-    public static void quickSortIterative(int[] arr, int l, int h) {
+    public static void quickSortIterative(int[] arr, int low, int high) {
         // Create an auxiliary stack
-        int[] stack = new int[h - l + 1];
+        int[] stack = new int[high - low + 1];
 
         // initialize top of stack
         int top = -1;
 
-        // push initial values of l and h to stack
-        stack[++top] = l;
-        stack[++top] = h;
+        // push initial values of low and high to stack
+        stack[++top] = low;
+        stack[++top] = high;
 
         // Keep popping from stack while it is not empty
         while (top >= 0) {
-            // Pop h and l
-            h = stack[top--];
-            l = stack[top--];
+            // Pop high and low
+            high = stack[top--];
+            low = stack[top--];
 
             // Set pivot element at its correct position in the sorted array
-            int p = partition(arr, l, h);
+            int p = partition(arr, low, high);
 
             // If there are elements on the left side of the pivot, push left side to stack
-            if (p - 1 > l) {
-                stack[++top] = l;
+            if (p - 1 > low) {
+                stack[++top] = low;
                 stack[++top] = p - 1;
             }
 
             // If there are elements on the right side of the pivot, push right side to stack
-            if (p + 1 < h) {
+            if (p + 1 < high) {
                 stack[++top] = p + 1;
-                stack[++top] = h;
+                stack[++top] = high;
             }
         }
     }

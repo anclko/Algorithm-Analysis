@@ -67,7 +67,7 @@ public class AlgorithmRunner {
             long endTime = System.nanoTime();
 
             //end time calculated from nano to microseconds
-            totalElapsedTime += (endTime - startTime) / 1000;
+            totalElapsedTime += (endTime - startTime)/1000;
 
         }
 
