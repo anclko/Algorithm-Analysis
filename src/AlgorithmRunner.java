@@ -66,18 +66,18 @@ public class AlgorithmRunner {
             // Measure the end time
             long endTime = System.nanoTime();
 
-            //end time calculated from nano to microseconds
-            totalElapsedTime += (endTime - startTime)/1000;
+            //end time calculated to nanoseconds
+            totalElapsedTime += (endTime - startTime);
 
         }
 
         // average time calculation
-        double averageElapsedTime = (double) totalElapsedTime / numberOfRuns;
+        double averageElapsedTime = (double) (totalElapsedTime / numberOfRuns)/1000;
 
         // print results in formatted way
         if ("Binary Search".equals(algorithm)) {
             ResultFormatter.printResults(algorithm, size, averageElapsedTime, arrayForBinarySearch, numberOfElementsToShow);
-            System.out.println("Target: Middle number of array");
+            System.out.println("(Target: Middle number of list)");
         } else {
             ResultFormatter.printResults(algorithm, size, averageElapsedTime, array, numberOfElementsToShow);
         }

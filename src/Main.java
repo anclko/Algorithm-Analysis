@@ -19,14 +19,14 @@ public class Main {
 
         // Algorithms to test
         String[] algorithms = {
-                "Insertion Iterative",
-                "Insertion Recursive",
-                "QS Median Pivot Recursive",
                 "QS Median Pivot Iterative",
+                "QS Median Pivot Recursive",
                 "QS Random Pivot Iterative",
                 "QS Random Pivot Recursive",
                 "QS Array[0] Pivot Iterative",
                 "QS Array[0] Pivot Recursive",
+                "Insertion Iterative",
+                "Insertion Recursive",
                 "Binary Search"};
 
         // 10 cycles to get an average

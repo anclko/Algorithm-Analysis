@@ -13,7 +13,7 @@ public class ResultFormatter {
 
     public static void printTableHeader() {
         System.out.println("------------------------------------------------------------------------------------------------------");
-        System.out.printf("%-30s %-20s %-30s %-30s%n", "Algorithm", "Size of Input", "Average Time (microseconds)", "Array Printed");
+        System.out.printf("%-30s %-20s %-30s %-30s%n", "Algorithm", "Size of Input", "Average Time (nanoseconds)", "Array Printed");
         System.out.println("------------------------------------------------------------------------------------------------------");
     }
 }
