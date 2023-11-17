@@ -8,7 +8,7 @@ public class AlgorithmRunner {
     public static void runAlgorithm(String algorithm, List<Integer> numbers, int numberOfRuns, int size, int numberOfElementsToShow) {
 
         // Run warm-up (for system stabilisation to avoid false times)
-        int warmupIterations = 2;
+        int warmupIterations = 5;
         WarmUp.warmUp(numbers, algorithm, warmupIterations);
 
         // Running the program 10 times after warm up

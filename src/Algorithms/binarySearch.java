@@ -20,28 +20,30 @@ public class binarySearch {
      *
      * @param arr    The array to search in.
      * @param target The value to search for.
-     * @param left  The starting index of the search range.
-     * @param right    The ending index of the search range.
-     * @return The index of the target if found, otherwise -1, not found.
+     * @param left   The starting index of the search range.
+     * @param right  The ending index of the search range.
      */
-    private static int binarySearchSort(int[] arr, int target, int left, int right) {
-        // checks if the left index is less than or equal to the right index.
-        if (left <= right) {
-            //set up a mid-value on sorted list
-            int mid = left + (right - left) / 2;
+    private static void binarySearchSort(int[] arr, int left, int right, int target) {
+        // Check if the left index is less than or equal to the right index.
+        while (left <= right) {
+            // Calculate the middle index of the current search range.
+            int middleIndex = left + (right - left) / 2;
 
-            // checks if the value of middle index is equal to the target.
-            if (arr[mid] == target) {
-                return mid;
-                //if target is greater than value at mid -> search right side
-            } else if (arr[mid] < target) {
-                return binarySearchSort(arr, target, mid + 1, right);
+            // Check if the target value is present at the middle index.
+            if (arr[middleIndex] == target) {
+                // Target value found, exit the function.
+                return;
+            }
+
+            // If the target value is greater, ignore the left half.
+            if (arr[middleIndex] < target) {
+                left = middleIndex + 1;
             } else {
-                //otherwise -> search left
-                return binarySearchSort(arr, target, left, mid - 1);
+                // If the target value is smaller, ignore the right half.
+                right = middleIndex - 1;
             }
         }
-        //if start index greater than end, element is not found
-        return -1;
+
+        // If we reach here, then the element was not present in the array.
     }
 }
