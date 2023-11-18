@@ -1,14 +1,6 @@
 package Algorithms;
-/**
- * Implementation of insertion sort algorithm using recursive method.
- */
+
 public class insertionRecursive {
-    /**
-     * Sorts an array using insertion sort recursively.
-     *
-     * @param arr  The array to be sorted.
-     * @param size The size of the array.
-     */
     public static void insertionSortRecursive(int[] arr, int size) {
         // base case -> if the size is 0 or less, the array is sorted
         if (size <= 0)

@@ -1,13 +1,7 @@
 package Algorithms;
-/**
- * Implementation of insertion sort algorithm using an iterative method.
- */
+
 public class insertionIterative {
-    /**
-     * Sorts an array in ascending order using Insertion Sort iteratively.
-     *
-     * @param array The array to be sorted.
-     */
+
     public static void insertionSort(int[] array) {
         //initialize n to length of array
         int n = array.length;
