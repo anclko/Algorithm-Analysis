@@ -1,43 +1,44 @@
 package Algorithms;
 
-import java.util.Random;
 
 public class randomIterative {
 
     public static void quickSortRandomIterative(int[] arr, int low, int high) {
+        // Create an auxiliary stack
         int[] stack = new int[high - low + 1];
+
+        // initialize top of stack
         int top = -1;
 
+        // push initial values of low and high to stack
         stack[++top] = low;
         stack[++top] = high;
 
+        // Keep popping from stack while it is not empty
         while (top >= 0) {
+            // Pop high and low
             high = stack[top--];
             low = stack[top--];
 
-            int pivotIndex = partition(arr, low, high);
+            // Set pivot element at its correct position in the sorted array
+            int p = partition(arr, low, high);
 
             // If there are elements on the left side of the pivot, push left side to stack
-            if (pivotIndex - 1 > low) {
+            if (p - 1 > low) {
                 stack[++top] = low;
-                stack[++top] = pivotIndex - 1;
+                stack[++top] = p - 1;
             }
 
             // If there are elements on the right side of the pivot, push right side to stack
-            if (pivotIndex + 1 < high) {
-                stack[++top] = pivotIndex + 1;
+            if (p + 1 < high) {
+                stack[++top] = p + 1;
                 stack[++top] = high;
             }
         }
     }
 
     static int partition(int[] arr, int low, int high) {
-        Random rand = new Random();
-        int pivotIndex = low + rand.nextInt((high - low )+ 1);
-        int pivot = arr[pivotIndex];
-
-        // Swap the pivot with the last element
-        swap(arr, pivotIndex, high);
+        int pivot = arr[high];
 
         int i = low;
 

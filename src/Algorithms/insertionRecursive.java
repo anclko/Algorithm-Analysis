@@ -1,25 +1,24 @@
 package Algorithms;
 
 public class insertionRecursive {
-    public static void insertionSortRecursive(int[] arr, int size) {
-        // base case -> if the size is 0 or less, the array is sorted
-        if (size <= 0)
-            return;
+    public static void insertionSortRecursive(int[] arr, int i, int n) {
+        int value = arr[i];
+        int j = i;
 
-        //recursive call to sort the array with one less element
-        insertionSortRecursive(arr, size - 1);
-
-        //insertion of last element into the sorted portion of the array
-        int key = arr[size - 1];
-        int j = size - 2;
-
-        //shift elements greater than key to the right to make space for insertion
-        while (j >= 0 && arr[j] > key) {
-            arr[j + 1] = arr[j];
+        // find index `j` within the sorted subset `arr[0…i-1]`
+        // where element `arr[i]` belongs
+        while (j > 0 && arr[j - 1] > value) {
+            arr[j] = arr[j - 1];
             j--;
         }
 
-        //insert the key to correct position in the array
-        arr[j + 1] = key;
+        arr[j] = value;
+
+        // note that the subarray `arr[j…i-1]` is shifted to
+        // the right by one position, i.e., `arr[j+1…i]`
+
+        if (i + 1 <= n) {
+            insertionSortRecursive(arr, i + 1, n);
+        }
     }
 }

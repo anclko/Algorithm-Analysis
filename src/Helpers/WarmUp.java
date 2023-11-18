@@ -24,7 +24,7 @@ public class WarmUp {
                     insertionIterative.insertionSort(array);
                     break;
                 case "Insertion Recursive":
-                    insertionRecursive.insertionSortRecursive(array, array.length);
+                    insertionRecursive.insertionSortRecursive(array, 1, array.length -1);
                     break;
                 case "QS Random Pivot Iterative":
                     randomIterative.quickSortRandomIterative(array, 0, array.length - 1);
@@ -45,11 +45,7 @@ public class WarmUp {
                     medianRecursive.quickSortMedianRecursive(array, 0, array.length - 1);
                     break;
                 case "Binary Search":
-                    // Choosing and setting a fixed middle number
-                    int targetIndex = arrayForBinarySearch.length / 2;
-                    int target = arrayForBinarySearch[targetIndex];
-                    // Binary search
-                    binarySearch.binarySearchSort(arrayForBinarySearch, target);
+                    binarySearch.binarySearchSort(arrayForBinarySearch, 49, 0, arrayForBinarySearch.length -1);
                     break;
             }
         }

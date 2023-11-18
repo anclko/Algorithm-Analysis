@@ -1,6 +1,5 @@
 package Algorithms;
 
-import java.util.Random;
 
 public class randomRecursive {
     public static void quickSortRandomRecursive(int[] arr, int start, int stop) {
@@ -15,12 +14,7 @@ public class randomRecursive {
     }
 
     static int partition(int[] arr, int low, int high) {
-        Random rand = new Random();
-        int pivotIndex = low + rand.nextInt((high - low )+ 1);
-        int pivot = arr[pivotIndex];
-
-        // Swap the pivot with the last element
-        swap(arr, pivotIndex, high);
+        int pivot = arr[high];
 
         int i = low;
 

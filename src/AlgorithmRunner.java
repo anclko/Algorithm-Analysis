@@ -1,6 +1,7 @@
 import Algorithms.*;
 import Helpers.ResultFormatter;
 import Helpers.WarmUp;
+
 import java.util.Arrays;
 import java.util.List;
 
@@ -16,6 +17,7 @@ public class AlgorithmRunner {
 
         int[] array = new int[0];
         int[] arrayForBinarySearch = new int[0];
+        int resultIndex = -1;
 
         for (int run = 0; run < numberOfRuns; run++) {
             // Create a list to store the numbers
@@ -34,7 +36,7 @@ public class AlgorithmRunner {
                     insertionIterative.insertionSort(array);
                     break;
                 case "Insertion Recursive":
-                    insertionRecursive.insertionSortRecursive(array, array.length);
+                    insertionRecursive.insertionSortRecursive(array, 1, array.length - 1);
                     break;
                 case "QS Random Pivot Iterative":
                     randomIterative.quickSortRandomIterative(array, 0, array.length - 1);
@@ -55,12 +57,7 @@ public class AlgorithmRunner {
                     medianRecursive.quickSortMedianRecursive(array, 0, array.length - 1);
                     break;
                 case "Binary Search":
-                    // Choosing and setting a fixed target to middle number in array
-                    int targetIndex = arrayForBinarySearch.length / 2;
-                    int target = arrayForBinarySearch[targetIndex];
-                    // Binary search algorithm
-                    binarySearch.binarySearchSort(arrayForBinarySearch, target);
-                    break;
+                    resultIndex = binarySearch.binarySearchSort(arrayForBinarySearch, 49, 0, arrayForBinarySearch.length -1);
             }
 
             // Measure the end time
@@ -72,14 +69,19 @@ public class AlgorithmRunner {
         }
 
         // average time calculation
-        double averageElapsedTime = (double) (totalElapsedTime / numberOfRuns)/1000;
+        double averageElapsedTimeMicro = (double) (totalElapsedTime / numberOfRuns)/1000;
+        double averageElapsedTimeMs = averageElapsedTimeMicro/1000;
 
         // print results in formatted way
         if ("Binary Search".equals(algorithm)) {
-            ResultFormatter.printResults(algorithm, size, averageElapsedTime, arrayForBinarySearch, numberOfElementsToShow);
-            System.out.println("(Target: Middle number of list)");
+            ResultFormatter.printResults(algorithm, size, averageElapsedTimeMs, arrayForBinarySearch, numberOfElementsToShow);
+            if (resultIndex != -1) {
+                System.out.println("Target value found.");
+            } else {
+                System.out.println("Target value not found in the array.");
+            }
         } else {
-            ResultFormatter.printResults(algorithm, size, averageElapsedTime, array, numberOfElementsToShow);
+            ResultFormatter.printResults(algorithm, size, averageElapsedTimeMs, array, numberOfElementsToShow);
         }
     }
 }

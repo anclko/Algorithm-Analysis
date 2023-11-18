@@ -30,7 +30,7 @@ public class Main {
                 "Binary Search"};
 
         // 10 cycles to get an average
-        int numberOfRuns = 10;
+        int numberOfRuns = 1;
 
         // Running through the units to test
         for (int numberOfElements : elementsToTest) {
