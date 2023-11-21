@@ -2,7 +2,10 @@ package Algorithms;
 
 public class medianIterative {
 
-    public static void quickSortMedianIterative(int[] arr, int low, int high) {
+    public static void medianIter(int[] array) {
+        int low = 0;
+        int high = array.length - 1;
+
         int[] stack = new int[high - low + 1];
         int top = -1;
 
@@ -13,15 +16,13 @@ public class medianIterative {
             high = stack[top--];
             low = stack[top--];
 
-            int pivotIndex = partition(arr, low, high);
+            int pivotIndex = partitionMedianOfThree(array, low, high);
 
-            // If there are elements on the left side of the pivot, push left side to stack
             if (pivotIndex - 1 > low) {
                 stack[++top] = low;
                 stack[++top] = pivotIndex - 1;
             }
 
-            // If there are elements on the right side of the pivot, push right side to stack
             if (pivotIndex + 1 < high) {
                 stack[++top] = pivotIndex + 1;
                 stack[++top] = high;
@@ -29,47 +30,47 @@ public class medianIterative {
         }
     }
 
-    static int partition(int[] arr, int low, int high) {
-        int pivotIndex = medianOfThree(arr, low, high);
-        int pivot = arr[pivotIndex];
+    public static void swap(int[] array, int i, int j) {
+        int temp = array[i];
+        array[i] = array[j];
+        array[j] = temp;
+    }
 
-        // Swap the pivot with the last element
-        swap(arr, pivotIndex, high);
-
-        int i = low;
+    // Lomuto partition method
+    public static int partitionLomuto(int[] array, int low, int high) {
+        int pivot = array[high];
+        int i = low - 1;
 
         for (int j = low; j < high; j++) {
-            if (arr[j] <= pivot) {
-                swap(arr, i, j);
+            if (array[j] <= pivot) {
                 i++;
+                swap(array, i, j);
             }
         }
 
-        // Swap the pivot to its final position
-        swap(arr, i, high);
-
-        return i;
+        swap(array, i + 1, high);
+        return i + 1;
     }
 
-    static int medianOfThree(int[] arr, int low, int high) {
+    // Partition method using Median of Three pivot
+    public static int partitionMedianOfThree(int[] array, int low, int high) {
         int mid = low + (high - low) / 2;
 
-        if (arr[low] > arr[mid]) {
-            swap(arr, low, mid);
-        }
-        if (arr[low] > arr[high]) {
-            swap(arr, low, high);
-        }
-        if (arr[mid] > arr[high]) {
-            swap(arr, mid, high);
+        // Sort low, mid, and high to determine the median
+        if (array[low] > array[mid]) {
+            swap(array, low, mid);
         }
 
-        return mid;
-    }
+        if (array[mid] > array[high]) {
+            swap(array, mid, high);
+        }
 
-    static void swap(int[] arr, int i, int j) {
-        int temp = arr[i];
-        arr[i] = arr[j];
-        arr[j] = temp;
+        if (array[low] > array[mid]) {
+            swap(array, low, mid);
+        }
+
+        // Place the pivot at the end before partitioning
+        swap(array, mid, high - 1);
+        return partitionLomuto(array, low, high - 1);
     }
 }
