@@ -1,7 +1,10 @@
 package Algorithms;
 
 public class firstElementIterative {
-    public static void quickSortIterative(int[] arr, int low, int high) {
+    public static void firstIterative(int[] array) {
+        int low = 0;
+        int high = array.length - 1;
+
         int[] stack = new int[high - low + 1];
         int top = -1;
 
@@ -12,15 +15,13 @@ public class firstElementIterative {
             high = stack[top--];
             low = stack[top--];
 
-            int pivotIndex = partition(arr, low, high);
+            int pivotIndex = partitionArrayZeroPivot(array, low, high);
 
-            // If there are elements on the left side of the pivot, push left side to stack
             if (pivotIndex - 1 > low) {
                 stack[++top] = low;
                 stack[++top] = pivotIndex - 1;
             }
 
-            // If there are elements on the right side of the pivot, push right side to stack
             if (pivotIndex + 1 < high) {
                 stack[++top] = pivotIndex + 1;
                 stack[++top] = high;
@@ -28,31 +29,30 @@ public class firstElementIterative {
         }
     }
 
-    static int partition(int[] arr, int low, int high) {
-        // Choose the first element as the pivot
-        int pivot = arr[low];
+    public static int partitionArrayZeroPivot(int[] array, int low, int high) {
+        // Place the pivot at the end before partitioning
+        swap(array, low, high);
+        return partition(array, low, high);
+    }
 
-        // Swap the pivot with the last element
-        swap(arr, low, high);
-
-        int i = low;
+    public static int partition(int[] array, int low, int high) {
+        int pivot = array[high];
+        int i = low - 1;
 
         for (int j = low; j < high; j++) {
-            if (arr[j] <= pivot) {
-                swap(arr, i, j);
+            if (array[j] <= pivot) {
                 i++;
+                swap(array, i, j);
             }
         }
 
-        // Swap the pivot to its final position
-        swap(arr, i, high);
-
-        return i;
+        swap(array, i + 1, high);
+        return i + 1;
     }
 
-    public static void swap(int[] arr, int i, int j) {
-        int temp = arr[i];
-        arr[i] = arr[j];
-        arr[j] = temp;
+    public static void swap(int[] array, int i, int j) {
+        int temp = array[i];
+        array[i] = array[j];
+        array[j] = temp;
     }
 }
