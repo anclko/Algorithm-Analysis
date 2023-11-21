@@ -27,22 +27,22 @@ public class WarmUp {
                     insertionRecursive.insertionSortRecursive(array, 1, array.length -1);
                     break;
                 case "QS Random Pivot Iterative":
-                    randomIterative.quickSortRandomIterative(array, 0, array.length - 1);
+                    randomQuicksort.quickSortRandomIterative(array);
                     break;
                 case "QS Random Pivot Recursion":
-                    randomRecursive.quickSortRandomRecursive(array, 0, array.length - 1);
+                    randomQuicksort.quickSortRandomRecursive(array, 0, array.length - 1);
                     break;
                 case "QS Array[0] Pivot Iterative":
-                    firstElementIterative.quickSortIterative(array, 0, array.length - 1);
+                    firstElementIterative.firstIterative(array);
                     break;
                 case "QS Array[0] Pivot Recursive":
-                    firstElementRecursive.quickSortRecursive(array, 0, array.length - 1);
+                    firstElementRecursive.firstRecursive(array, 0, array.length - 1);
                     break;
                 case "QS Median Pivot Iterative":
-                    medianIterative.quickSortMedianIterative(array, 0, array.length - 1);
+                    medianIterative.medianIter(array);
                     break;
                 case "QS Median Pivot Recursive":
-                    medianRecursive.quickSortMedianRecursive(array, 0, array.length - 1);
+                    medianRecursive.medianRec(array, 0, array.length - 1);
                     break;
                 case "Binary Search":
                     binarySearch.binarySearchSort(arrayForBinarySearch, 49, 0, arrayForBinarySearch.length -1);
