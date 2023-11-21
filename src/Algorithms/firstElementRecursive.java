@@ -1,38 +1,35 @@
 package Algorithms;
 
 public class firstElementRecursive {
-    public static void quickSortRecursive(int[] arr, int start, int stop) {
-        if (start < stop) {
-            // pi is the partitioning index, arr[pi] is now at the right place
-            int partitionIndex = partition(arr, start, stop);
-
-            // Recursively sort elements before and after the partition
-            quickSortRecursive(arr, start, partitionIndex);
-            quickSortRecursive(arr, partitionIndex + 1, stop);
+    public static void firstRecursive(int[] arr, int low, int high) {
+        if (low < high) {
+            int pivotIndex = array0Pivot(arr, low, high);
+            pivotIndex = partition(arr, low, high, pivotIndex);
+            firstRecursive(arr, low, pivotIndex - 1);
+            firstRecursive(arr, pivotIndex + 1, high);
         }
     }
 
-    static int partition(int[] arr, int low, int high) {
-        // Choose the first element as the pivot
-        int pivot = arr[low];
+    private static int array0Pivot(int[] arr, int low, int high) {
+        return high; // Use high as the pivot index
+    }
 
-        // Move pivot to the correct position
-        int i = low;
-        for (int j = low + 1; j <= high; j++) {
-            if (arr[j] < pivot) {
+    private static int partition(int[] arr, int low, int high, int pivotIndex) {
+        int pivot = arr[pivotIndex];
+        int i = low - 1;
+
+        for (int j = low; j < high; j++) {
+            if (arr[j] <= pivot) {
                 i++;
                 swap(arr, i, j);
             }
         }
 
-        // Swap the pivot to its final position
-        swap(arr, i, low);
-
-        // Return the index of the pivot
-        return i;
+        swap(arr, i + 1, high);
+        return i + 1;
     }
 
-    public static void swap(int[] arr, int i, int j) {
+    private static void swap(int[] arr, int i, int j) {
         int temp = arr[i];
         arr[i] = arr[j];
         arr[j] = temp;
