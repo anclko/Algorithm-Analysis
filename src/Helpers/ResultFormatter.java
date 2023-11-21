@@ -2,7 +2,7 @@ package Helpers;
 
 public class ResultFormatter {
     public static void printResults(String algorithm, int size, double averageTime, int[] sortedArray, int numberOfElementsToShow) {
-        System.out.printf("%-30s %-20d %-30.5f ", algorithm, size, averageTime);
+        System.out.printf("%-30s %-20d %-30.4f ", algorithm, size, averageTime);
 
         // Call the printSortedArray method to display a few elements from the sorted array
         ArrayPrinted.printSortedArray(sortedArray, numberOfElementsToShow);
@@ -13,7 +13,7 @@ public class ResultFormatter {
 
     public static void printTableHeader() {
         System.out.println("------------------------------------------------------------------------------------------------------");
-        System.out.printf("%-30s %-20s %-30s %-30s%n", "Algorithm", "Size of Input", "Average Time (Milliseconds)", "Array Printed");
+        System.out.printf("%-30s %-20s %-30s %-30s%n", "Algorithm", "Size of Input", "Average Time (Microseconds)", "Array Printed");
         System.out.println("------------------------------------------------------------------------------------------------------");
     }
 }
