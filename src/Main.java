@@ -7,7 +7,7 @@ public class Main {
 
     public static void main(String[] args) {
         // File Path
-        String filePath = "C:\\Users\\ackoc\\Desktop\\Seminar1 - java\\numbers.txt";
+        String filePath = "C:\\Users\\ackoc\\Desktop\\Seminar1 - Sorting Algorithms\\numbers.txt";
 
         // Units to test
         int[] elementsToTest = {
@@ -15,9 +15,17 @@ public class Main {
                 1000,
                 10000,
                 100000,
+                200000,
+                300000,
+                400000,
+                500000,
+                600000,
+                700000,
+                800000,
+                900000,
                 1000000};
 
-        // Algorithms to test
+        // Algorithms to test (comment out depending on which you want to test individually)
         String[] algorithms = {
                 "QS Median Pivot Iterative",
                 "QS Median Pivot Recursive",
@@ -30,7 +38,7 @@ public class Main {
                 "Binary Search"};
 
         // 10 cycles to get an average
-        int numberOfRuns = 1;
+        int numberOfRuns = 10;
 
         // Running through the units to test
         for (int numberOfElements : elementsToTest) {
