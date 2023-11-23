@@ -3,43 +3,68 @@ package Algorithms;
 public class medianRecursive {
     public static void medianRec(int[] arr, int low, int high) {
         if (low < high) {
-            int pivotIndex = medianOfThreePivot(arr, low, high);
-            pivotIndex = partition(arr, low, high, pivotIndex);
-            medianRec(arr, low, pivotIndex - 1);
-            medianRec(arr, pivotIndex + 1, high);
-        }
-    }
+            int pivotIndex = medianOfThree(arr, low, high);
+            int pivotFinalIndex = partition(arr, low, high, pivotIndex);
 
-    private static int medianOfThreePivot(int[] arr, int low, int high) {
-        int middle = low + (high - low) / 2;
-        if (arr[low] > arr[middle]) {
-            swap(arr, low, middle);
-        }
-        if (arr[low] > arr[high]) {
-            swap(arr, low, high);
-        }
-        if (arr[middle] > arr[high]) {
-            swap(arr, middle, high);
-        }
+            // Check if pivotFinalIndex is within bounds
+            if (pivotFinalIndex > low && pivotFinalIndex < high) {
+                // Recursive call on the left of pivot
+                medianRec(arr, low, pivotFinalIndex - 1);
 
-        // Move pivot to the end
-        swap(arr, middle, high - 1);
-        return high; // Use high - 1 as the pivot index
-    }
-
-    private static int partition(int[] arr, int low, int high, int pivotIndex) {
-        int pivot = arr[pivotIndex];
-        int i = low - 1;
-
-        for (int j = low; j < high; j++) {
-            if (arr[j] <= pivot) {
-                i++;
-                swap(arr, i, j);
+                // Recursive call on the right of pivot
+                medianRec(arr, pivotFinalIndex + 1, high);
             }
         }
+    }
 
-        swap(arr, i + 1, high);
-        return i + 1;
+    public static int medianOfThree(int[] arr, int low, int high) {
+        int mid = low + (high - low) / 2;
+
+        // Sort the indices to find the median
+        if (arr[low] > arr[mid]) {
+            swap(arr, low, mid);
+        }
+        if (arr[mid] > arr[high]) {
+            swap(arr, mid, high);
+        }
+        if (arr[low] > arr[mid]) {
+            swap(arr, low, mid);
+        }
+
+        // The median of three is now at the midIndex
+        return mid;
+    }
+
+    public static int partition(int[] arr, int low, int high, int pivotIndex) {
+        // Choose the pivot as the median of three
+        int pivot = arr[pivotIndex];
+
+        // Swap the pivot element with the last element
+        swap(arr, pivotIndex, high - 1);
+
+        int i = low - 1;
+        int j = high - 1;
+
+        while (true) {
+            // Find element on the left that should be on the right
+            do {
+                i++;
+            } while (arr[i] < pivot);
+
+            // Find element on the right that should be on the left
+            do {
+                j--;
+            } while (arr[j] > pivot);
+
+            // If the indices have not crossed, swap elements
+            if (i < j) {
+                swap(arr, i, j);
+            } else {
+                // Indices have crossed, swap pivot to its correct place
+                swap(arr, i, high - 1);
+                return i;
+            }
+        }
     }
 
     private static void swap(int[] arr, int i, int j) {
