@@ -1,32 +1,41 @@
 package Algorithms;
 
 public class firstElementRecursive {
+    // method to find the partition position
     public static void firstRecursive(int[] arr, int low, int high) {
         if (low < high) {
-            int pivotIndex = array0Pivot(arr, low, high);
-            pivotIndex = partition(arr, low, high, pivotIndex);
-            firstRecursive(arr, low, pivotIndex - 1);
+            // Partition the array and get the index of the pivot element
+            int pivotIndex = partition(arr, low, high);
+
+            // Recursively sort the subarrays on either side of the pivot
+            firstRecursive(arr, low, pivotIndex);
             firstRecursive(arr, pivotIndex + 1, high);
         }
     }
 
-    private static int array0Pivot(int[] arr, int low, int high) {
-        return high; // Use high as the pivot index
-    }
+    public static int partition(int[] arr, int low, int high) {
+        int pivot = arr[low];
+        int i = low - 1, j = high + 1;
 
-    private static int partition(int[] arr, int low, int high, int pivotIndex) {
-        int pivot = arr[pivotIndex];
-        int i = low - 1;
-
-        for (int j = low; j < high; j++) {
-            if (arr[j] <= pivot) {
+        while (true) {
+            // Increment i while the element at arr[i] is less than the pivot
+            do {
                 i++;
-                swap(arr, i, j);
-            }
-        }
+            } while (arr[i] < pivot);
 
-        swap(arr, i + 1, high);
-        return i + 1;
+            // Decrement j while the element at arr[j] is greater than the pivot
+            do {
+                j--;
+            } while (arr[j] > pivot);
+
+            // If there are zero or one elements in the subarray, then it is already sorted
+            if (i >= j) {
+                return j;
+            }
+
+            // Swap arr[i] and arr[j] to put them in the correct order
+            swap(arr, i, j);
+        }
     }
 
     private static void swap(int[] arr, int i, int j) {
