@@ -1,68 +1,49 @@
 package Algorithms;
 
-
-import java.util.Random;
-import java.util.Stack;
-
-public class randomQuicksort {
-
-    private static final Random rand = new Random();
-
-    public static void randomIterative(int[] arr, int low, int high) {
-        Stack<Integer> stack = new Stack<>();
-        stack.push(low);
-        stack.push(high);
-
-        while (!stack.isEmpty()) {
-            high = stack.pop();
-            low = stack.pop();
-
-            if (low < high) {
-                int pivotIndex = randomPivot(low, high);
-                int pivotFinalIndex = partition(arr, low, high, pivotIndex);
-
-                // Push sub-arrays to the stack for later processing
-                if (pivotFinalIndex - 1 > low) {
-                    stack.push(low);
-                    stack.push(pivotFinalIndex - 1);
-                }
-                if (pivotFinalIndex + 1 < high) {
-                    stack.push(pivotFinalIndex + 1);
-                    stack.push(high);
-                }
-            }
-        }
-    }
-
-    public static void randomRecursive(int[] arr, int low, int high) {
+public class medianRecursive {
+    public static void medianRec(int[] arr, int low, int high) {
         if (low < high) {
-            int pivotIndex = randomPivot(low, high);
+            int pivotIndex = medianOfThree(arr, low, high);
             int pivotFinalIndex = partition(arr, low, high, pivotIndex);
 
             // Check if pivotFinalIndex is within bounds
             if (pivotFinalIndex > low && pivotFinalIndex < high) {
                 // Recursive call on the left of pivot
-                randomRecursive(arr, low, pivotFinalIndex - 1);
+                medianRec(arr, low, pivotFinalIndex - 1);
 
                 // Recursive call on the right of pivot
-                randomRecursive(arr, pivotFinalIndex + 1, high);
+                medianRec(arr, pivotFinalIndex + 1, high);
             }
         }
     }
 
-    public static int randomPivot(int low, int high) {
-        return rand.nextInt(high - low + 1) + low;
+    public static int medianOfThree(int[] arr, int low, int high) {
+        int mid = low + (high - low) / 2;
+
+        // Sort the indices to find the median
+        if (arr[low] > arr[mid]) {
+            swap(arr, low, mid);
+        }
+        if (arr[mid] > arr[high]) {
+            swap(arr, mid, high);
+        }
+        if (arr[low] > arr[mid]) {
+            swap(arr, low, mid);
+        }
+
+        // The median of three is now at the midIndex
+        return mid;
     }
 
     public static int partition(int[] arr, int low, int high, int pivotIndex) {
-        // Choose the pivot as the randomly generated index
+        // Choose the pivot as the median of three
         int pivot = arr[pivotIndex];
 
         // Swap the pivot element with the last element
-        swap(arr, pivotIndex, high);
+        swap(arr, pivotIndex, high - 1);
 
         int i = low - 1;
-        int j = high;
+        int j = high - 1;
 
         while (true) {
             // Find element on the left that should be on the right
@@ -73,14 +54,14 @@ public class randomQuicksort {
             // Find element on the right that should be on the left
             do {
                 j--;
-            } while (j > low && arr[j] > pivot);
+            } while (arr[j] > pivot);
 
             // If the indices have not crossed, swap elements
             if (i < j) {
                 swap(arr, i, j);
             } else {
                 // Indices have crossed, swap pivot to its correct place
-                swap(arr, i, high);
+                swap(arr, i, high - 1);
                 return i;
             }
         }
@@ -92,4 +73,3 @@ public class randomQuicksort {
         arr[j] = temp;
     }
 }
-
