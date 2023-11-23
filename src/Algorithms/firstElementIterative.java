@@ -1,58 +1,64 @@
 package Algorithms;
 
+import java.util.Stack;
+
 public class firstElementIterative {
-    public static void firstIterative(int[] array) {
-        int low = 0;
-        int high = array.length - 1;
+    public static void firstIterative(int[] arr, int low, int high) {
+        Stack<Integer> stack = new Stack<>();
+        stack.push(low);
+        stack.push(high);
 
-        int[] stack = new int[high - low + 1];
-        int top = -1;
+        while (!stack.isEmpty()) {
+            high = stack.pop();
+            low = stack.pop();
 
-        stack[++top] = low;
-        stack[++top] = high;
+            int pivotIndex = partition(arr, low, high);
 
-        while (top >= 0) {
-            high = stack[top--];
-            low = stack[top--];
-
-            int pivotIndex = partitionArrayZeroPivot(array, low, high);
-
+            // If there are elements on the left side of the pivot, push them to the stack
             if (pivotIndex - 1 > low) {
-                stack[++top] = low;
-                stack[++top] = pivotIndex - 1;
+                stack.push(low);
+                stack.push(pivotIndex - 1);
             }
 
+            // If there are elements on the right side of the pivot, push them to the stack
             if (pivotIndex + 1 < high) {
-                stack[++top] = pivotIndex + 1;
-                stack[++top] = high;
+                stack.push(pivotIndex + 1);
+                stack.push(high);
             }
         }
     }
 
-    public static int partitionArrayZeroPivot(int[] array, int low, int high) {
-        // Place the pivot at the end before partitioning
-        swap(array, low, high);
-        return partition(array, low, high);
-    }
+    // Partition function with the first element as pivot
+    public static int partition(int[] arr, int low, int high) {
+        int pivot = arr[low];
+        int i = low + 1, j = high;
 
-    public static int partition(int[] array, int low, int high) {
-        int pivot = array[high];
-        int i = low - 1;
-
-        for (int j = low; j < high; j++) {
-            if (array[j] <= pivot) {
+        while (i <= j) {
+            // Increment i while the element at arr[i] is less than the pivot
+            while (i <= j && arr[i] <= pivot) {
                 i++;
-                swap(array, i, j);
+            }
+
+            // Decrement j while the element at arr[j] is greater than the pivot
+            while (arr[j] > pivot) {
+                j--;
+            }
+
+            // If there are elements to swap, do the swap
+            if (i <= j) {
+                swap(arr, i, j);
             }
         }
 
-        swap(array, i + 1, high);
-        return i + 1;
+        // Swap the pivot element with the element at index j
+        swap(arr, low, j);
+
+        return j;
     }
 
-    public static void swap(int[] array, int i, int j) {
-        int temp = array[i];
-        array[i] = array[j];
-        array[j] = temp;
+    private static void swap(int[] arr, int i, int j) {
+        int temp = arr[i];
+        arr[i] = arr[j];
+        arr[j] = temp;
     }
 }
