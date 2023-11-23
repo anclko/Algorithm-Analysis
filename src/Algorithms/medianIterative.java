@@ -1,76 +1,84 @@
 package Algorithms;
 
+import java.util.Stack;
+
 public class medianIterative {
 
-    public static void medianIter(int[] array) {
-        int low = 0;
-        int high = array.length - 1;
+    public static void medianIter(int[] arr, int low, int high) {
+        Stack<Integer> stack = new Stack<>();
+        stack.push(low);
+        stack.push(high);
 
-        int[] stack = new int[high - low + 1];
-        int top = -1;
+        while (!stack.isEmpty()) {
+            high = stack.pop();
+            low = stack.pop();
 
-        stack[++top] = low;
-        stack[++top] = high;
+            if (low < high) {
+                int pivotIndex = medianOfThree(arr, low, high);
+                int pivotFinalIndex = partition(arr, low, high, pivotIndex);
 
-        while (top >= 0) {
-            high = stack[top--];
-            low = stack[top--];
-
-            int pivotIndex = partitionMedianOfThree(array, low, high);
-
-            if (pivotIndex - 1 > low) {
-                stack[++top] = low;
-                stack[++top] = pivotIndex - 1;
-            }
-
-            if (pivotIndex + 1 < high) {
-                stack[++top] = pivotIndex + 1;
-                stack[++top] = high;
+                // Push sub-arrays to the stack for later processing
+                stack.push(low);
+                stack.push(pivotFinalIndex - 1);
+                stack.push(pivotFinalIndex + 1);
+                stack.push(high);
             }
         }
     }
 
-    public static void swap(int[] array, int i, int j) {
-        int temp = array[i];
-        array[i] = array[j];
-        array[j] = temp;
-    }
-
-    // Lomuto partition method
-    public static int partitionLomuto(int[] array, int low, int high) {
-        int pivot = array[high];
-        int i = low - 1;
-
-        for (int j = low; j < high; j++) {
-            if (array[j] <= pivot) {
-                i++;
-                swap(array, i, j);
-            }
-        }
-
-        swap(array, i + 1, high);
-        return i + 1;
-    }
-
-    // Partition method using Median of Three pivot
-    public static int partitionMedianOfThree(int[] array, int low, int high) {
+    public static int medianOfThree(int[] arr, int low, int high) {
         int mid = low + (high - low) / 2;
 
-        // Sort low, mid, and high to determine the median
-        if (array[low] > array[mid]) {
-            swap(array, low, mid);
+        // Sort the indices to find the median
+        if (arr[low] > arr[mid]) {
+            swap(arr, low, mid);
+        }
+        if (arr[mid] > arr[high]) {
+            swap(arr, mid, high);
+        }
+        if (arr[low] > arr[mid]) {
+            swap(arr, low, mid);
         }
 
-        if (array[mid] > array[high]) {
-            swap(array, mid, high);
-        }
+        // The median of three is now at the midIndex
+        return mid;
+    }
 
-        if (array[low] > array[mid]) {
-            swap(array, low, mid);
-        }
+    public static int partition(int[] arr, int low, int high, int pivotIndex) {
+        // Choose the pivot as the median of three
+        int pivot = arr[pivotIndex];
 
-        // Place the pivot at the end before partitioning
-        swap(array, mid, high - 1);
-        return partitionLomuto(array, low, high - 1);
+        // Swap the pivot element with the last element
+        swap(arr, pivotIndex, high - 1);
+
+        int i = low - 1;
+        int j = high - 1;
+
+        while (true) {
+            // Find element on the left that should be on the right
+            do {
+                i++;
+            } while (arr[i] < pivot);
+
+            // Find element on the right that should be on the left
+            do {
+                j--;
+            } while (arr[j] > pivot);
+
+            // If the indices have not crossed, swap elements
+            if (i < j) {
+                swap(arr, i, j);
+            } else {
+                // Indices have crossed, swap pivot to its correct place
+                swap(arr, i, high - 1);
+                return i;
+            }
+        }
+    }
+
+    private static void swap(int[] arr, int i, int j) {
+        int temp = arr[i];
+        arr[i] = arr[j];
+        arr[j] = temp;
     }
 }
